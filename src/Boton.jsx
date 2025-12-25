@@ -1,13 +1,8 @@
-// Boton.jsx
-function Boton({ texto, alHacerClic }) {
+function Boton({ alHacerClic, texto, claseExtra }) {
   return (
-    <button 
-      className="mi-boton-personalizado" 
-      onClick={alHacerClic}
-    >
+    <button onClick={alHacerClic} className={claseExtra}>
       {texto}
     </button>
   );
 }
-
 export default Boton;
