@@ -7,6 +7,11 @@ const IMAGENES_CARTAS = [
   "/images/1Basto.jpg",
   "/images/1Espada.jpg",
   "/images/7Espada.jpg",
+  "/images/1Copa.jpg",
+  "/images/7Copa.jpg",
+  "/images/1Oro.jpg",
+  "/images/7Oro.jpg",
+  "/images/7Basto.jpg",
 ];
 
 const POSICION_MAZO = { x: window.innerWidth + 200, y: window.innerHeight / 2 };
