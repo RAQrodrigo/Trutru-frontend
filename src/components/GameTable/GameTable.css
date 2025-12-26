@@ -1,0 +1,40 @@
+.game-table {
+    min-height: 100vh;
+    width: 100vw;
+    background-color: #1a4a1a;
+    /* Verde Truco */
+    position: relative;
+    overflow: hidden;
+    display: block;
+    font-family: "Arial Round", "Comic Sans MS", sans-serif;
+}
+
+.top-interface {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 50;
+}
+
+.top-interface h1 {
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 3.5rem;
+    color: white;
+    text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+}
+
+.bottom-interface {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    z-index: 20;
+}
