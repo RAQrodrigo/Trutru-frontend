@@ -1,6 +1,11 @@
 import { useState, useCallback, useEffect } from "react";
 
-export const useDraggable = ({ id, initialPosition, onDragEnd }) => {
+export const useDraggable = ({
+  id,
+  initialPosition,
+  onDragEnd,
+  onDragStart,
+}) => {
   const [position, setPosition] = useState(initialPosition);
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -14,6 +19,7 @@ export const useDraggable = ({ id, initialPosition, onDragEnd }) => {
     (e) => {
       e.preventDefault();
       setIsDragging(true);
+      if (onDragStart) onDragStart(id);
       setDragOffset({
         x: e.clientX - position.x,
         y: e.clientY - position.y,

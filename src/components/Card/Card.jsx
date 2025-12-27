@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useDraggable } from "../../hooks/useDraggable";
 import "./Card.css";
 
-const Card = ({ card, onDragEnd }) => {
+const Card = ({ card, onDragEnd, onDragStart }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const { position, isDragging, handleMouseDown } = useDraggable({
     id: card.id,
     initialPosition: card.position,
     onDragEnd: () => onDragEnd(card.id),
+    onDragStart: onDragStart ? () => onDragStart(card.id) : undefined,
   });
 
   const style = {

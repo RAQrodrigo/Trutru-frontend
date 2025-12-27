@@ -12,8 +12,8 @@ const GameTable = () => {
 
   return (
     <div className="game-table">
-      <PlayZone visible={true} />
-      <BurnZone visible={true} />
+      <PlayZone visible={isDragging} />
+      <BurnZone visible={isDragging} />
       <div className="top-interface">
         <h1>Truquiño</h1>
         <Button onClick={dealCards} className="btn-repartir">
@@ -21,7 +21,11 @@ const GameTable = () => {
         </Button>
       </div>
 
-      <Hand cards={cards} onCardDrop={handleCardDrop} />
+      <Hand
+        cards={cards}
+        onCardDrop={handleCardDrop}
+        onDragStart={() => setIsDragging(true)}
+      />
 
       <div className="bottom-interface">
         <Button className="btn-envido" onClick={() => console.log("Envido")}>
