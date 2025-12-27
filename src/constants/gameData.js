@@ -14,9 +14,9 @@ export const CARD_IMAGES = [
 ];
 
 export const INITIAL_POSITIONS = [
-  { x: -80, y: 20, rotate: -15 }, // Card 1
-  { x: 0, y: 0, rotate: 0 }, // Card 2
-  { x: 80, y: 20, rotate: 15 }, // Card 3
+  { x: -100, y: 110, rotate: -15 }, // Card 1
+  { x: 0, y: 100, rotate: 0 }, // Card 2
+  { x: 100, y: 110, rotate: 15 }, // Card 3
 ];
 
 // Position where the deck is located (off-screen or specific spot)
