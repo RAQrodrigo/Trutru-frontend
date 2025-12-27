@@ -2,7 +2,8 @@
   position: fixed;
   width: 110px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border: 2px solid #00000047;
+  box-shadow: 0 4px 6px rgb(0, 0, 0);
   user-select: none;
 
   /* Transición suave */
