@@ -3,12 +3,17 @@ import { useGame } from "../../hooks/useGame";
 import Hand from "../Hand/Hand";
 import Button from "../UI/Button";
 import "./GameTable.css";
+import PlayZone from "../PlayZone/PlayZone";
+import BurnZone from "../BurnZone/BurnZone";
 
 const GameTable = () => {
-  const { cards, dealCards, handleCardDrop } = useGame();
+  const { cards, dealCards, handleCardDrop, isDragging, setIsDragging } =
+    useGame();
 
   return (
     <div className="game-table">
+      <PlayZone visible={true} />
+      <BurnZone visible={true} />
       <div className="top-interface">
         <h1>Truquiño</h1>
         <Button onClick={dealCards} className="btn-repartir">

@@ -7,6 +7,7 @@ import {
 
 export const useGame = () => {
   const [cards, setCards] = useState([]);
+  const [isDragging, setIsDragging] = useState(false);
 
   const dealCards = () => {
     if (cards.length > 0) {
@@ -45,6 +46,7 @@ export const useGame = () => {
   };
 
   const handleCardDrop = (id) => {
+    setIsDragging(false);
     // Snap back to home position on drop
     setCards((prev) =>
       prev.map((card) =>
@@ -57,5 +59,9 @@ export const useGame = () => {
     cards,
     dealCards,
     handleCardDrop,
+    isDragging,
+    setIsDragging,
   };
 };
+
+export default useGame;
