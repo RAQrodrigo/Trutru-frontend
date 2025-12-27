@@ -1,9 +1,16 @@
 .card-image {
-    position: fixed;
-    /* Or absolute, depending on container context */
-    width: 100px;
-    /* Adjust based on original design or requirement */
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    user-select: none;
+  position: fixed;
+  width: 100px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  user-select: none;
+
+  /* Transición suave */
+  transition: box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+/* Hover: efecto "se levanta" */
+.card-image:hover {
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.45);
+  filter: brightness(1.1);
 }

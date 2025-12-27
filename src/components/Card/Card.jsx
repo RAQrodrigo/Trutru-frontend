@@ -1,35 +1,41 @@
-import React from 'react';
-import { useDraggable } from '../../hooks/useDraggable';
-import './Card.css';
+import React, { useState } from "react";
+import { useDraggable } from "../../hooks/useDraggable";
+import "./Card.css";
 
 const Card = ({ card, onDragEnd }) => {
-    const { position, isDragging, handleMouseDown } = useDraggable({
-        id: card.id,
-        initialPosition: card.position,
-        onDragEnd: () => onDragEnd(card.id) // Notify parent to handle "drop" logic if needed
-    });
+  const [isHovered, setIsHovered] = useState(false);
 
-    const style = {
-        left: `${position.x}px`,
-        top: `${position.y}px`,
-        transform: isDragging
-            ? `translate(-50%, -50%) rotate(0deg) scale(1.1)`
-            : `translate(-50%, -50%) rotate(${card.rotate}deg) scale(1)`,
-        zIndex: isDragging ? 100 : 1,
-        cursor: isDragging ? "grabbing" : "grab",
-        transition: isDragging ? "none" : "all 0.6s cubic-bezier(0.23, 1, 0.32, 1)",
-    };
+  const { position, isDragging, handleMouseDown } = useDraggable({
+    id: card.id,
+    initialPosition: card.position,
+    onDragEnd: () => onDragEnd(card.id),
+  });
 
-    return (
-        <img
-            src={card.src}
-            className="card-image"
-            draggable={false}
-            onMouseDown={handleMouseDown}
-            style={style}
-            alt="Card"
-        />
-    );
+  const style = {
+    left: `${position.x}px`,
+    top: `${position.y}px`,
+    transform: isDragging
+      ? `translate(-50%, -50%) rotate(0deg) scale(1.1)`
+      : isHovered
+      ? `translate(-50%, -60%) rotate(${card.rotate}deg) scale(1.05)`
+      : `translate(-50%, -50%) rotate(${card.rotate}deg) scale(1)`,
+    zIndex: isDragging || isHovered ? 100 : 1,
+    cursor: isDragging ? "grabbing" : "grab",
+    transition: isDragging ? "none" : "all 0.25s ease",
+  };
+
+  return (
+    <img
+      src={card.src}
+      className="card-image"
+      draggable={false}
+      onMouseDown={handleMouseDown}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={style}
+      alt="Card"
+    />
+  );
 };
 
 export default Card;
