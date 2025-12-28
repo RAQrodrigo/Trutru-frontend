@@ -1,11 +1,17 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GameTable from "./components/GameTable/GameTable";
-import "./App.css"; // Keeping this if there are global reset styles, or I can remove it if empty.
+import LandingPage from "./components/LandingPage/LandingPage";
+import "./App.css";
 
 function App() {
   return (
-    <GameTable />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/game" element={<GameTable />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
-
