@@ -1,0 +1,27 @@
+.play-zone {
+  position: fixed;
+
+  /* 👇 POSICIÓN */
+  top: 30%;
+  left: 25%;
+
+  /* 👇 TAMAÑO */
+  width: 400px;
+  height: 200px;
+
+  /* 👇 ESTÉTICA */
+  border: 3px dashed #1e90ff;
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+  font-weight: bold;
+  color: #1e90ff;
+
+  background: rgba(30, 144, 255, 0.1);
+
+  pointer-events: none; /* 🔑 no bloquea drag */
+}

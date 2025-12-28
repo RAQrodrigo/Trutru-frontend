@@ -1,0 +1,260 @@
+/* LandingPage.css */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap');
+
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+    background: radial-gradient(circle at center, #1a2e1a 0%, #0d1a0d 100%);
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Background Texture for "Felt" effect */
+.landing-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+.landing-content {
+    z-index: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.game-title {
+    font-size: 6rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin: 0;
+    background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 10px 30px rgba(255, 170, 0, 0.3);
+    animation: float 6s ease-in-out infinite;
+}
+
+.game-subtitle {
+    font-size: 1.5rem;
+    color: #a3cfa3;
+    margin-top: -1rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Rank Section */
+.rank-display {
+    margin: 2rem 0;
+    width: 100%;
+    max-width: 400px;
+}
+
+.rank-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.rank-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.rank-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #88cc88;
+}
+
+.rank-title {
+    font-size: 2.5rem;
+    margin: 0.5rem 0;
+    font-weight: 700;
+}
+
+.rank-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 1rem 0 0.5rem;
+}
+
+.rank-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #4caf50, #8bc34a);
+    border-radius: 4px;
+}
+
+.rank-xp {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin: 0;
+    text-align: right;
+}
+
+/* Mode Selection */
+.mode-selection {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.mode-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    opacity: 0.8;
+}
+
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.mode-card {
+    width: 180px;
+    height: 250px;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+    border-radius: 15px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mode-card:hover {
+    transform: translateY(-15px) rotate(2deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    z-index: 2;
+}
+
+.card-face {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    color: #333;
+    padding: 1rem;
+    border: 4px solid white;
+    border-radius: 12px;
+    margin: 6px;
+    /* Inner margin simulating border */
+}
+
+/* Card patterns */
+.mode-card:nth-child(1) .card-face {
+    border-color: #e53935;
+    color: #e53935;
+}
+
+/* Swords color aprox */
+.mode-card:nth-child(2) .card-face {
+    border-color: #1e88e5;
+    color: #1e88e5;
+}
+
+.mode-card:nth-child(3) .card-face {
+    border-color: #43a047;
+    color: #43a047;
+}
+
+.mode-number {
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.mode-desc {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+}
+
+/* Play Button */
+.play-button {
+    margin-top: 3rem;
+    padding: 1.2rem 4rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a2e1a;
+    background: #ffd700;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.play-button:hover {
+    background: #fff;
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 4rem;
+    }
+
+    .cards-container {
+        gap: 1rem;
+    }
+
+    .mode-card {
+        width: 140px;
+        height: 200px;
+    }
+
+    .mode-number {
+        font-size: 2.5rem;
+    }
+}
