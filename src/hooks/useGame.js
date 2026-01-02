@@ -45,9 +45,35 @@ export const useGame = () => {
     }, 50);
   };
 
-  const handleCardDrop = (id) => {
+  const handleCardDrop = (id, position, playZoneRef, burnZoneRef) => {
     setIsDragging(false);
-    // Snap back to home position on drop
+
+    const point = {
+      x: position.x,
+      y: position.y,
+    };
+
+    const isInside = (ref) => {
+      if (!ref?.current) return false;
+      const rect = ref.current.getBoundingClientRect();
+
+      return (
+        point.x >= rect.left &&
+        point.x <= rect.right &&
+        point.y >= rect.top &&
+        point.y <= rect.bottom
+      );
+    };
+
+    if (isInside(playZoneRef)) {
+      console.log("Carta jugada:", id);
+    } else if (isInside(burnZoneRef)) {
+      console.log("Carta quemada:", id);
+    } else {
+      console.log("Carta soltada fuera de zonas");
+    }
+
+    // Por ahora vuelve a la mano
     setCards((prev) =>
       prev.map((card) =>
         card.id === id ? { ...card, position: card.home } : card

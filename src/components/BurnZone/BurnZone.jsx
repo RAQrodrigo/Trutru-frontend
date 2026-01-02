@@ -1,10 +1,14 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import "./BurnZone.css";
 
-const BurnZone = ({ visible }) => {
+const BurnZone = forwardRef(({ visible }, ref) => {
   if (!visible) return null;
 
-  return <div className="burn-zone">QUEMAR</div>;
-};
+  return (
+    <div ref={ref} className="burn-zone">
+      QUEMAR
+    </div>
+  );
+});
 
 export default BurnZone;

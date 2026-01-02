@@ -1,33 +1,48 @@
 import { useState, useCallback, useEffect } from "react";
 
+// Hook `useDraggable`:
+// Proporciona la lógica para arrastrar un elemento con el ratón.
+// Parámetros:
+// - `id`: identificador de la entidad arrastrada
+// - `initialPosition`: posición inicial { x, y } enviada por el padre
+// - `onDragEnd`: callback opcional que recibe (id, position) al soltar
+// - `onDragStart`: callback opcional que recibe (id) al comenzar el arrastre
 export const useDraggable = ({
   id,
   initialPosition,
   onDragEnd,
   onDragStart,
 }) => {
+  // Estado local para la posición actualmente mostrada en pantalla
   const [position, setPosition] = useState(initialPosition);
+  // Indica si la carta está siendo arrastrada
   const [isDragging, setIsDragging] = useState(false);
+  // Offset entre la posición del cursor y la posición del elemento
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 
-  // Update position if initialPosition changes (e.g. dealing new cards)
+  // Si la posición inicial cambia desde el padre (ej. repartir nuevas cartas),
+  // sincronizamos la posición local para que la UI refleje el estado del padre.
   useEffect(() => {
     setPosition(initialPosition);
   }, [initialPosition]);
 
+  // Al presionar el ratón sobre el elemento
   const handleMouseDown = useCallback(
     (e) => {
       e.preventDefault();
       setIsDragging(true);
+      // Notificamos al padre que comienza el arrastre
       if (onDragStart) onDragStart(id);
+      // Calculamos el desfase para mantener la posición relativa del cursor
       setDragOffset({
         x: e.clientX - position.x,
         y: e.clientY - position.y,
       });
     },
-    [position]
+    [position, id, onDragStart]
   );
 
+  // Mientras movemos el ratón, actualizamos la posición visual
   const handleMouseMove = useCallback(
     (e) => {
       if (isDragging) {
@@ -40,20 +55,24 @@ export const useDraggable = ({
     [isDragging, dragOffset]
   );
 
+  // Al soltar el ratón
   const handleMouseUp = useCallback(() => {
     if (isDragging) {
       setIsDragging(false);
 
+      // Informamos al padre de la posición final
       if (onDragEnd) {
-        onDragEnd(id);
+        onDragEnd(id, position);
       }
 
-      // 👇 FORZAMOS volver a la posición que viene del padre
+      // Forzamos la posición local a la que nos proporcione el padre
+      // Esto evita que la carta quede visualmente en una posición
+      // distinta a la que el estado global (padre) conoce.
       setPosition(initialPosition);
     }
-  }, [isDragging, onDragEnd, id, initialPosition]);
+  }, [isDragging, onDragEnd, id, initialPosition, position]);
 
-  // Global event listeners for drag while mouse is down (even outside element)
+  // Listeners globales para seguir el arrastre aunque el cursor salga del elemento
   useEffect(() => {
     if (isDragging) {
       window.addEventListener("mousemove", handleMouseMove);
@@ -68,6 +87,8 @@ export const useDraggable = ({
     };
   }, [isDragging, handleMouseMove, handleMouseUp]);
 
+  // Exponemos la posición actual, el estado de arrastre y la función para iniciar
+  // el arrastre (que se liga al evento onMouseDown del elemento).
   return {
     position,
     isDragging,

@@ -1,10 +1,14 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import "./PlayZone.css";
 
-const PlayZone = ({ visible }) => {
+const PlayZone = forwardRef(({ visible }, ref) => {
   if (!visible) return null;
 
-  return <div className="play-zone">JUGAR</div>;
-};
+  return (
+    <div ref={ref} className="play-zone">
+      JUGAR
+    </div>
+  );
+});
 
 export default PlayZone;
