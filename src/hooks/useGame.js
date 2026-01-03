@@ -51,6 +51,23 @@ export const useGame = () => {
     }, 50);
   };
 
+  // Helper: compute positions for table cards (centered row)
+  const computeTableLayout = (cardsArray, opts = {}) => {
+    const spacing = opts.spacing || 140; // px between cards
+    const centerX = window.innerWidth / 2;
+    // vertical position for table cards (tweakable)
+    const centerY = window.innerHeight * (opts.centerYFactor || 0.55);
+
+    const total = cardsArray.length;
+    const startX = centerX - ((Math.max(total, 1) - 1) * spacing) / 2;
+
+    return cardsArray.map((card, i) => ({
+      ...card,
+      position: { x: startX + i * spacing, y: centerY },
+      rotate: card.rotate ?? 0,
+    }));
+  };
+
   const handleCardDrop = (id, position, playZoneRef, burnZoneRef) => {
     setIsDragging(false);
 
@@ -87,7 +104,6 @@ export const useGame = () => {
       // Add to table and reflow all table cards into a centered row
       setTableCards((prev) => {
         const playedCard = { ...handCards.find((c) => c.id === id) };
-        // mark as on table
         playedCard.zone = "table";
         playedCard.rotate = 0;
 
@@ -98,19 +114,7 @@ export const useGame = () => {
           visibleTable = newTable.slice(0, newTable.length - 3);
         }
 
-        // layout: centered row for visible cards
-        const spacing = 140; // px between cards
-        const centerX = window.innerWidth / 2;
-        // Ajuste: subir la fila un poco más — 55% de la altura de la ventana
-        const centerY = window.innerHeight * 0.55;
-        const total = visibleTable.length;
-        const startX = centerX - ((Math.max(total, 1) - 1) * spacing) / 2;
-
-        return visibleTable.map((card, i) => ({
-          ...card,
-          position: { x: startX + i * spacing, y: centerY },
-          rotate: 0,
-        }));
+        return computeTableLayout(visibleTable);
       });
 
       return;
@@ -130,24 +134,13 @@ export const useGame = () => {
 
         const newTable = [...prev, burnedCard];
 
-        // If there are more than 3 cards after adding, remove the last 3 (most recent)
         let visibleTable = newTable;
         if (newTable.length > 3) {
           visibleTable = newTable.slice(0, newTable.length - 3);
         }
 
-        // layout: place visible cards in a centered row, burned card will be included
-        const spacing = 140; // px between cards
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight * 0.55; // same Y as table cards
-        const total = visibleTable.length;
-        const startX = centerX - ((Math.max(total, 1) - 1) * spacing) / 2;
-
-        return visibleTable.map((card, i) => ({
-          ...card,
-          position: { x: startX + i * spacing, y: centerY },
-          rotate: 0,
-        }));
+        // Use same layout helper (centerY default is 0.55)
+        return computeTableLayout(visibleTable);
       });
 
       // Nota: mantenemos `burning: true` para que la carta quede con el
@@ -164,11 +157,56 @@ export const useGame = () => {
     );
   };
 
+  /**
+   * simulateOpponentPlay(cards)
+   * - cards: array of objects { id?, src, rotate?, zone? }
+   *   - id: optional string. If missing, an id will be generated.
+   *   - src: image path (required)
+   *   - rotate: optional rotation angle in degrees
+   *   - zone: optional, either 'table' (default) or 'burned'
+   *
+   * This function adds the given cards to `tableCards` and recalculates the
+   * layout (centers them in a row). Useful to simulate opponent plays from
+   * the backend. Call it like:
+   *
+   *   simulateOpponentPlay([
+   *     { src: '/images/1Basto.jpg' },
+   *     { src: '/images/4Copa.jpg', rotate: 6 },
+   *   ]);
+   *
+   * Notes:
+   * - Provide full `src` public paths (e.g. `/images/Blanca.jpg`).
+   * - If you want to mark a card as burned, pass `zone: 'burned'`.
+   */
+  const simulateOpponentPlay = (cards = []) => {
+    if (!Array.isArray(cards) || cards.length === 0) return;
+
+    setTableCards((prev) => {
+      const prepared = cards.map((c) => ({
+        id: c.id || crypto.randomUUID(),
+        src: c.src,
+        zone: c.zone === "burned" ? "burned" : "table",
+        burning: c.zone === "burned" ? true : false,
+        rotate: c.rotate || 0,
+      }));
+
+      const newTable = [...prev, ...prepared];
+
+      let visibleTable = newTable;
+      if (newTable.length > 3) {
+        visibleTable = newTable.slice(0, newTable.length - 3);
+      }
+
+      return computeTableLayout(visibleTable);
+    });
+  };
+
   return {
     handCards,
     tableCards,
     dealCards,
     handleCardDrop,
+    simulateOpponentPlay,
     isDragging,
     setIsDragging,
   };

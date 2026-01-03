@@ -21,12 +21,15 @@ const GameTable = () => {
   } = useGame();
 
   return (
-    <div className="game-table">
+    <div className={`game-table ${isDragging ? "dragging" : ""}`}>
       <PlayZone ref={playZoneRef} visible={isDragging} />
       <BurnZone ref={burnZoneRef} visible={isDragging} />
 
-      <div className="game-header">
-        <h1 className="game-title">Truquiño</h1>
+      {/* Panel inferior izquierdo: título + botón repartir (encima de los botones de acción) */}
+      <div className="left-bottom-panel" aria-hidden>
+        <div className="toon-title">
+          <span className="toon-text">Truquiño</span>
+        </div>
         <div className="deal-container">
           <Button onClick={dealCards} className="btn-repartir">
             Repartir Cartas

@@ -1,12 +1,44 @@
 .game-table {
   min-height: 100vh;
   width: 100vw;
-  background-color: #1a4a1a;
-  /* Verde Truco */
+  /* Quitamos el tinte verde base y aplicamos solo la imagen + overlay oscuro
+     para evitar que la mesa tenga un filtro verde fuerte. */
+  background-color: transparent;
+  /* Capa 1: imagen de la mesa; Capa 2: overlay sutil para contraste */
+  background-image: url("/images/Table.jpg"),
+    linear-gradient(rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.14));
+  background-blend-mode: normal;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
   display: block;
   font-family: "Arial Round", "Comic Sans MS", sans-serif;
+}
+
+/* Overlay oscuro aplicado solo mientras se arrastra una carta. */
+.game-table.dragging::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(
+    0,
+    0,
+    0,
+    0.28
+  ); /* intensidad del oscurecimiento, ajustar si quieres */
+  pointer-events: none; /* no bloquea interacción */
+  z-index: 75; /* por encima de la mesa pero debajo de elementos interactivos importantes */
+  transition: background 180ms ease;
+}
+
+.game-table.dragging {
+  /* aumentar contraste de la imagen ligeramente cuando arrastramos */
+  filter: brightness(0.92) saturate(0.95);
 }
 
 .top-interface {
@@ -18,14 +50,6 @@
   flex-direction: column;
   align-items: center;
   z-index: 50;
-}
-
-.top-interface h1 {
-  margin: 0;
-  margin-bottom: 10px;
-  font-size: 3.5rem;
-  color: white;
-  text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
 .bottom-interface {
@@ -40,6 +64,29 @@
   padding: 10px 14px;
   border-radius: 14px;
   backdrop-filter: blur(6px);
+}
+
+/* Panel en la esquina inferior izquierda que contiene el título y el botón de repartir
+   Se sitúa encima de la barra inferior de botones para que quede visible y accesible. */
+.left-bottom-panel {
+  position: fixed;
+  bottom: 72px; /* deja espacio para la barra de botones */
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  z-index: 70;
+  background: rgba(0, 0, 0, 0.08);
+  padding: 6px 8px;
+  border-radius: 10px;
+}
+
+.left-bottom-panel .game-title {
+  margin: 0;
+  font-size: 1.6rem;
+  color: white;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.25);
 }
 
 /* Header grouping title + deal button at top-right */
@@ -99,4 +146,44 @@
 .opponent-row .opponent-card.opp-3 {
   transform: translateX(10px) translateY(6px) rotate(8deg);
   z-index: 54;
+}
+
+/* =========================
+   TOON TITLE
+========================= */
+
+.toon-title {
+  position: absolute;
+  top: 45px;
+  right: -740%;
+  transform: translateX(-50%);
+  z-index: 80;
+  pointer-events: none;
+  animation: floatTitle 3s ease-in-out infinite;
+}
+
+.toon-text {
+  font-size: 3.6rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+
+  color: #ffeb3b; /* amarillo cartoon */
+  -webkit-text-stroke: 3px #2b1a00; /* borde grueso */
+  text-shadow: 4px 4px 0 #8b5a00, 8px 8px 0 rgba(0, 0, 0, 0.35);
+
+  font-family: "Comic Sans MS", "Arial Rounded MT Bold", system-ui;
+  user-select: none;
+}
+
+/* Flotación suave */
+@keyframes floatTitle {
+  0% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
 }
