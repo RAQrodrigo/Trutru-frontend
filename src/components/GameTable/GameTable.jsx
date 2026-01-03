@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { useGame } from "../../hooks/useGame";
 import Hand from "../Hand/Hand";
 import Button from "../UI/Button";
+import Card from "../Card/Card";
 import "./GameTable.css";
 import PlayZone from "../PlayZone/PlayZone";
 import BurnZone from "../BurnZone/BurnZone";
@@ -10,8 +11,14 @@ const GameTable = () => {
   const playZoneRef = useRef(null);
   const burnZoneRef = useRef(null);
 
-  const { cards, dealCards, handleCardDrop, isDragging, setIsDragging } =
-    useGame();
+  const {
+    handCards,
+    tableCards,
+    dealCards,
+    handleCardDrop,
+    isDragging,
+    setIsDragging,
+  } = useGame();
 
   return (
     <div className="game-table">
@@ -25,8 +32,12 @@ const GameTable = () => {
         </Button>
       </div>
 
+      {tableCards.map((card) => (
+        <Card key={card.id} card={card} />
+      ))}
+
       <Hand
-        cards={cards}
+        cards={handCards}
         onCardDrop={handleCardDrop}
         onDragStart={() => setIsDragging(true)}
         playZoneRef={playZoneRef}

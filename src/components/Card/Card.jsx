@@ -23,23 +23,34 @@ const Card = ({ card, onDragEnd, onDragStart }) => {
   });
 
   // Estilos en línea para posicionar y animar la carta según su estado
+  // make table/burned cards smaller than hand cards
+  const imageWidth = card.zone === "table" || card.zone === "burned" ? 80 : 110;
+
   const style = {
     left: `${position.x}px`,
     top: `${position.y}px`,
+    width: `${imageWidth}px`,
     transform: isDragging
       ? `translate(-50%, -50%) rotate(0deg) scale(1.1)` // durante el arrastre se eleva/escala
       : isHovered
       ? `translate(-50%, -60%) rotate(${card.rotate}deg) scale(1.05)` // elevación al pasar el ratón
       : `translate(-50%, -50%) rotate(${card.rotate}deg) scale(1)`,
     zIndex: isDragging || isHovered ? 100 : 1,
-    cursor: isDragging ? "grabbing" : "grab",
+    cursor: isDragging
+      ? "grabbing"
+      : card.zone === "burned"
+      ? "default"
+      : "grab",
     transition: isDragging ? "none" : "all 0.25s ease",
+    pointerEvents: card.zone === "burned" ? "none" : "auto",
   };
 
   return (
     <img
       src={card.src}
-      className="card-image"
+      className={`card-image ${card.burning ? "burning" : ""} ${
+        card.zone === "burned" ? "burned" : ""
+      }`}
       draggable={false} // desactivamos el drag nativo del navegador
       onMouseDown={handleMouseDown} // inicia la lógica de arrastre del hook
       onMouseEnter={() => setIsHovered(true)} // estado visual al pasar el ratón

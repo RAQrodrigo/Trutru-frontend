@@ -1,6 +1,9 @@
 .burn-zone {
   position: fixed;
 
+  /* Asegurar que la zona quede por encima de las cartas */
+  z-index: 500;
+
   /* 👇 POSICIÓN (lado izquierdo) */
   top: 30%;
   left: 52%;

@@ -15,3 +15,41 @@
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.45);
   filter: brightness(1.1);
 }
+
+/* Animación de quemado */
+.card-image.burning {
+  animation: burn 900ms ease forwards;
+  filter: saturate(0.6) contrast(1.2) brightness(0.9);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
+  transform-origin: 50% 50%;
+}
+
+@keyframes burn {
+  0% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+    filter: none;
+  }
+  50% {
+    transform: translate(-50%, -60%) scale(1.05) rotate(-6deg);
+    opacity: 0.85;
+    filter: hue-rotate(-20deg) sepia(0.3) contrast(1.1);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.9) rotate(-8deg);
+    opacity: 0.95;
+    filter: sepia(0.45) hue-rotate(-30deg) brightness(0.85);
+  }
+}
+
+.card-image.burning:hover {
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
+}
+
+/* Estado persistente de carta quemada (después de la animación) */
+.card-image.burned {
+  filter: sepia(0.45) hue-rotate(-30deg) brightness(0.85);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
+  transform: translate(-50%, -50%) rotate(-8deg) scale(0.9);
+  opacity: 0.95;
+}

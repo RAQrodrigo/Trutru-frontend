@@ -11,17 +11,18 @@ const Hand = ({ cards, onCardDrop, onDragStart, playZoneRef, burnZoneRef }) => {
   return (
     <>
       {/* Recorremos las cartas y renderizamos un `Card` por cada una */}
-      {cards.map((card) => (
-        <Card
-          key={card.id}
-          card={card}
-          // Cuando `Card` termine el arrastre llamamos a `onCardDrop` pasando
-          // el id, la posición y las referencias a las zonas necesarias
-          onDragEnd={(id, pos) => onCardDrop(id, pos, playZoneRef, burnZoneRef)}
-          // Pasamos la función para el inicio del arrastre tal cual
-          onDragStart={onDragStart}
-        />
-      ))}
+      {cards
+        .filter((card) => card.zone === "hand")
+        .map((card) => (
+          <Card
+            key={card.id}
+            card={card}
+            onDragEnd={(id, pos) =>
+              onCardDrop(id, pos, playZoneRef, burnZoneRef)
+            }
+            onDragStart={onDragStart}
+          />
+        ))}
     </>
   );
 };
