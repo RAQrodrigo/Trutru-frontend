@@ -25,11 +25,25 @@ const GameTable = () => {
       <PlayZone ref={playZoneRef} visible={isDragging} />
       <BurnZone ref={burnZoneRef} visible={isDragging} />
 
-      <div className="top-interface">
-        <h1>Truquiño</h1>
-        <Button onClick={dealCards} className="btn-repartir">
-          Repartir Cartas
-        </Button>
+      <div className="game-header">
+        <h1 className="game-title">Truquiño</h1>
+        <div className="deal-container">
+          <Button onClick={dealCards} className="btn-repartir">
+            Repartir Cartas
+          </Button>
+        </div>
+      </div>
+
+      {/* Opponent cards (face-down) - tight fan */}
+      <div className="opponent-row" aria-hidden>
+        {[0, 1, 2].map((i) => (
+          <img
+            key={`op-${i}`}
+            src="/images/Blanca.jpg"
+            alt="Carta rival"
+            className={`opponent-card opp-${i + 1}`}
+          />
+        ))}
       </div>
 
       {tableCards.map((card) => (

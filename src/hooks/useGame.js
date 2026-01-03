@@ -101,8 +101,8 @@ export const useGame = () => {
         // layout: centered row for visible cards
         const spacing = 140; // px between cards
         const centerX = window.innerWidth / 2;
-        // Bajar ligeramente la fila: 68% de la altura de la ventana
-        const centerY = window.innerHeight * 0.68;
+        // Ajuste: subir la fila un poco más — 55% de la altura de la ventana
+        const centerY = window.innerHeight * 0.55;
         const total = visibleTable.length;
         const startX = centerX - ((Math.max(total, 1) - 1) * spacing) / 2;
 
@@ -139,7 +139,7 @@ export const useGame = () => {
         // layout: place visible cards in a centered row, burned card will be included
         const spacing = 140; // px between cards
         const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight * 0.68; // same Y as table cards
+        const centerY = window.innerHeight * 0.55; // same Y as table cards
         const total = visibleTable.length;
         const startX = centerX - ((Math.max(total, 1) - 1) * spacing) / 2;
 
